@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - scalable-chat-network
+    restart: unless-stopped
+
+  backendapi:
+    image: amitgt9967/scalable-chat-app-v2
+    container_name: backend_api_container
+    ports:
+      - '8000:8000'
+    networks:
+      - scalable-chat-network
+    env_file: .env
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  scalable-chat-network:
+    driver: bridge

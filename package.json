@@ -7,12 +7,14 @@
     "start": "node dist/index.js",
     "watch": "tsc -w",
     "server": "nodemon dist/index.js",
-    "dev": "concurrently \"npm run watch\" \"npm run server\""
+    "dev": "concurrently \"npm run watch\" \"npm run server\"",
+    "build": "tsc",
+    "docker:publish": "docker build -t amitgt9967/scalable-chat-app:v2 --platform linux/amd64 . && docker push amitgt9967/scalable-chat-app:v2"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["scalable chat app", "chat app"],
+  "author": "Amit Gupta <amitgt9967@gmail.com>",
   "license": "ISC",
-  "description": "",
+  "description": "Scalable Chat APP",
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

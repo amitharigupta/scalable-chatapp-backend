@@ -15,6 +15,7 @@ interface LoginPayloadType {
 class AuthController {
     static async login(req: Request, res: Response) {
         try {
+            console.log('req : ', req.body);
             const body:LoginPayloadType = req.body;
             let findUser = await prisma.user.findUnique({ where: { email: body.email } });
 
