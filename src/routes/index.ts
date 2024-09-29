@@ -3,6 +3,6 @@ import authRouteApi from "./auth.routes.js";
 
 const router = Router();
 
-router.post('/auth', authRouteApi);
+router.use('/auth', authRouteApi);
 
 export default router;
