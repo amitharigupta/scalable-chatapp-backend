@@ -11,7 +11,10 @@
     "build": "tsc",
     "docker:publish": "docker build -t amitgt9967/scalable-chat-app:v2 --platform linux/amd64 . && docker push amitgt9967/scalable-chat-app:v2"
   },
-  "keywords": ["scalable chat app", "chat app"],
+  "keywords": [
+    "scalable chat app",
+    "chat app"
+  ],
   "author": "Amit Gupta <amitgt9967@gmail.com>",
   "license": "ISC",
   "description": "Scalable Chat APP",
@@ -30,6 +33,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.20.0"
   }

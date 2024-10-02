@@ -32,6 +32,7 @@ class AuthController {
 
             const token = await jwt.sign(JWTPayload, process.env.JWT_SECRET, { expiresIn: "24h" });
 
+            console.log('token : ', { user: {...findUser, token: `Bearer ${token}` } })
             return res.status(200).json({ success: true, message: "User Loggedin Successfully", data: { user: {...findUser, token: `Bearer ${token}` } } });
 
         } catch (error) {
