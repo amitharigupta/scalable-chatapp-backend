@@ -6,7 +6,7 @@ export function setupSocket (io: Server) {
         
         socket.on('message', (data) => {
             console.log('Server side message');
-            io.emit('message', 'Hello, from server!', data);
+            socket.broadcast.emit('message', 'Hello, from server!', data);
         })
 
         socket.on('disconnect', () => {

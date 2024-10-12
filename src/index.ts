@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 7000;
 import indexRouterAPI from "./routes/index.js";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { setupSocket } from "./scoket.js";
+import { setupSocket } from "./socket.js";
 
 const server = createServer(app);
 
