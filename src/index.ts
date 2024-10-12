@@ -4,16 +4,30 @@ import cors from "cors";
 const app: Application = express();
 const PORT = process.env.PORT || 7000;
 import indexRouterAPI from "./routes/index.js";
+import { Server } from "socket.io";
+import { createServer } from "http";
+import { setupSocket } from "./scoket.js";
 
+const server = createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+setupSocket(io);
+
+export { io };
 // * Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api', indexRouterAPI);
+app.use("/api", indexRouterAPI);
 
 app.get("/", (req: Request, res: Response) => {
   return res.send("It's working 🙌");
 });
 
-app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
+server.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));

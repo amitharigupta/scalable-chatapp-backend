@@ -11,3 +11,8 @@ npm install && npm run dev
 ```js 
 http://localhost:8000
 ```
+
+
+docker run -d --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
+
+npx prisma migrate dev --name=user_migrate_schema

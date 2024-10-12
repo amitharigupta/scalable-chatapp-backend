@@ -1,5 +1,18 @@
--- AlterTable
-ALTER TABLE "users" ALTER COLUMN "provider" DROP NOT NULL;
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "provider" TEXT,
+    "password" TEXT,
+    "image" TEXT,
+    "oauth_id" TEXT,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "chat_groups" (
@@ -24,6 +37,9 @@ CREATE TABLE "group_users" (
 
     CONSTRAINT "group_users_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE INDEX "chat_groups_created_at_idx" ON "chat_groups"("created_at");
