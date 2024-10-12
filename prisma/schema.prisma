@@ -30,27 +30,44 @@ model User {
 }
 
 model ChatGroup {
-  id         String       @id @default(uuid())
+  id         String       @id @default(uuid()) @db.Uuid
   name       String
   user_id    String
   user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  title      String
-  passcode   String
+  title      String       @db.VarChar(191)
+  passcode   String       @db.VarChar(20)
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
   GroupUsers GroupUsers[]
+  Chats      Chats[]
 
   @@index([created_at])
   @@map("chat_groups")
 }
 
 model GroupUsers {
-  id         String    @id @default(uuid())
+  id         Int       @id @default(autoincrement())
   group      ChatGroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
-  group_id   String
+  group_id   String    @db.Uuid
   name       String
+  is_active  Boolean   @default(true)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
   @@map("group_users")
+}
+
+model Chats {
+  id         String    @id @default(uuid())
+  group      ChatGroup @relation(fields: [grp_id], references: [id], onDelete: Cascade)
+  grp_id   String    @db.Uuid
+  message    String?
+  name       String
+  file       String?
+  is_active  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@index([created_at])
+  @@map("chats")
 }
