@@ -1,21 +1,39 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 
-export function setupSocket (io: Server) {
-    io.on('connection', (socket) => {
-        console.log('The socket connected', socket.id);
-        
-        socket.on('message', (data) => {
-            console.log('Server side message');
-            socket.broadcast.emit('message', 'Hello, from server!', data);
-        })
+interface CustomSocket extends Socket {
+  room?: string;
+}
 
-        socket.on('disconnect', () => {
-            console.log('Client disconnected');
-        });
+export function setupSocket(io: Server) {
+  io.use((socket: CustomSocket, next) => {
+    const room = socket.handshake.auth.room || socket.handshake.headers.room;
+    if (!room) {
+      return next(new Error("Invalid room"));
+    }
 
-        socket.on('chat message', (msg) => {
-            console.log(`Message received: ${msg}`);
-            io.emit('chat message', msg);
-        });
+    socket.room = room;
+    next();
+  });
+
+  io.on("connection", (socket: CustomSocket) => {
+
+    socket.join(socket.room);
+
+    console.log("The socket connected", socket.id);
+
+    socket.on("message", (data) => {
+      console.log("Server side message");
+      io.to(socket.room).emit("message", data);
+    //   socket.broadcast.emit("message", "Hello, from server!", data);
     });
+
+    socket.on("disconnect", () => {
+      console.log("Client disconnected");
+    });
+
+    socket.on("chat message", (msg) => {
+      console.log(`Message received: ${msg}`);
+      io.emit("chat message", msg);
+    });
+  });
 }
