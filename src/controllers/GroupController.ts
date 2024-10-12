@@ -53,6 +53,8 @@ class GroupController {
     try {
       const { id } = req.params;
       if (id) {
+
+        console.log('id : ', id);
         const group = await prisma.chatGroup.findUnique({
           where: {
             id: id,

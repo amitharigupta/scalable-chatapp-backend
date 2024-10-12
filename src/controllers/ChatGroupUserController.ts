@@ -16,7 +16,7 @@ class ChatGroupUserController {
         },
       });
 
-      return res.json({ message: "Date fetched successfully!", data: users });
+      return res.status(200).json({ message: "Date fetched successfully!", data: users });
     } catch (error) {
       return res
         .status(500)
@@ -30,7 +30,7 @@ class ChatGroupUserController {
       const user = await prisma.groupUsers.create({
         data: body,
       });
-      return res.json({ message: "User created successfully!", data: user });
+      return res.status(200).json({ message: "User created successfully!", data: user });
     } catch (error) {
       return res
         .status(500)
